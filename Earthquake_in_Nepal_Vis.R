@@ -74,14 +74,16 @@ GeoMarker <- gvisGeoChart(geomarker, "LatLong",
                           sizevar='Energy_relative_to_7.6',
                           colorvar="Magnitude.ML.", 
                           options=list(height=350, 
+                                       width=600,
                                        region="NP", 
-                                       title="Location of 1015 April earthquake and aftersock(>=5 M) epicentre",  
+                                       title="Location of 1015 April earthquake and aftersock greater than 5M epicentre",  
                                        chartid="Geomap",
                                        displayMode='markers',
+                                       tableOptions="bgcolor=\"#AABBCC\"",
                                        colorAxis="{values:[4.5,5.5,6.5,8],
                                        colors:[\'grey', \'orange\', \'pink',\'red']}"))
 
-
+plot(GeoMarker)
 
 #lets make calender chart
 calender <- summarise(group_by(table, Date), No_of_earthquake = length(Date))
@@ -109,8 +111,9 @@ bubble <- gvisBubbleChart(bubble, idvar="Date",
                           colorvar="Rating", sizevar="Energy",
                           options = list(width=600, height=350,
                                          title="Time of Earthquake",
+                                        chartArea="{left:50,top:50,width:\"75%\",height:\"75%\"}",
                                          hAxis= "{title:'Time (hrs)'}", chartid = "bubble chart"))
-
+plot(bubble)
 
 #Bar graph
 
@@ -125,15 +128,14 @@ table$Epicentre = ifelse(table$Epicentre=="sindhupalchok" |
 pie = summarise(group_by(table, Epicentre), No_of_quakes_greater_than_5 = sum(greater_5),No_of_quakes_less_than_5 = sum(less_5) )
 pie = pie[which(pie$No_of_quakes_less_than_5>5), ]
 
-Pie <- gvisColumnChart(pie, options = list(width=554, height=200,
-                                           title="No of quakes below 5 and above 5", vAxis="{title:'No of quakes (RS)'}",
-                                           hAxis= "{title:'Location'}",))
+Pie <- gvisBarChart(pie, options = list(width=600, height=400,
+                                           title="No of quakes below 5 and above 5"))
+plot(Pie)
+
 
 ##lets merge
-
-
 Combine <- gvisMerge(gvisMerge(GeoMarker, Pie), gvisMerge(bubble, Cal),
-                     horizontal=TRUE, tableOptions="bgcolor=\"#AABBCC\"", "Earthquake in Nepal") 
+                     horizontal=FALSE, tableOptions="bgcolor=\"#AABBCC\"", "Earthquake in Nepal") 
 
 plot(Combine)
 
