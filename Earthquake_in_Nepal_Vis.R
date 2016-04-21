@@ -80,8 +80,8 @@ GeoMarker <- gvisGeoChart(geomarker, "LatLong",
                                        chartid="Geomap",
                                        displayMode='markers',
                                        tableOptions="bgcolor=\"#AABBCC\"",
-                                       colorAxis="{values:[4.5,5.5,6.5,8],
-                                       colors:[\'grey', \'orange\', \'pink',\'red']}"))
+                                       colorAxis="{values:[4.5,6,8],
+                                       colors:[\'grey', \'orange\', \'red']}"))
 
 plot(GeoMarker)
 
